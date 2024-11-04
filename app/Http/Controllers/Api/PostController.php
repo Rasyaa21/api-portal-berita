@@ -60,7 +60,7 @@ class PostController
 
     /**
      * @OA\Get(
-     *     path="/news/unapproved",
+     *     path="/news/pending-approval",
      *     summary="Retrieve all unapproved news posts",
      *     tags={"News"},
      *     @OA\Response(
