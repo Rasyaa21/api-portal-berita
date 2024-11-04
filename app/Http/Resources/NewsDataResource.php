@@ -5,33 +5,39 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="CommentUser",
+ *     type="object",
+ *     properties={
+ *         @OA\Property(property="comment", type="string"),
+ *         @OA\Property(property="name", type="string"),
+ *     }
+ * )
+ */
+
+/**
+ * @OA\Schema(
+ *     schema="NewsData",
+ *     type="object",
+ *     properties={
+ *         @OA\Property(property="id", type="integer"),
+ *         @OA\Property(property="news_title", type="string"),
+ *         @OA\Property(property="news_description", type="string"),
+ *         @OA\Property(property="image", type="string"),
+ *         @OA\Property(property="user", type="integer"),
+ *         @OA\Property(property="author", type="object",
+ *             @OA\Property(property="name", type="string"),
+ *             @OA\Property(property="email", type="string")
+ *         ),
+ *         @OA\Property(property="is_accepted", type="boolean"),
+ *         @OA\Property(property="created_at", type="string", format="date"),
+ *         @OA\Property(property="comment", type="array", @OA\Items(ref="#/components/schemas/CommentUser"))
+ *     }
+ * )
+ */
 class NewsDataResource extends JsonResource
 {
-    /**
-     * @OA\Schema(
-     *     schema="NewsData",
-     *     type="object",
-     *     properties={
-     *         @OA\Property(property="id", type="integer"),
-     *         @OA\Property(property="news_title", type="string"),
-     *         @OA\Property(property="news_description", type="string"),
-     *         @OA\Property(property="image", type="string"),
-     *         @OA\Property(property="user", type="integer"),
-     *         @OA\Property(property="author", type="object",
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="email", type="string")
-     *         ),
-     *         @OA\Property(property="is_accepted", type="boolean"),
-     *         @OA\Property(property="created_at", type="string", format="date"),
-     *         @OA\Property(property="comment", type="array", @OA\Items(ref="#/components/schemas/CommentUserResource"))
-     *     }
-     * )
-     */
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -39,7 +45,7 @@ class NewsDataResource extends JsonResource
             'news_title' => $this->news_title,
             'news_description' => $this->news_description,
             'image' => $this->image,
-            'user'=> $this->user_id,
+            'user' => $this->user_id,
             'author' => [
                 'name' => $this->user->name,
                 'email' => $this->user->email,
