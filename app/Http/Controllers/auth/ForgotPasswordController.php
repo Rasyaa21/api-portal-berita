@@ -19,11 +19,12 @@ class ForgotPasswordController extends Controller
         try {
             $input = $req->only('email');
             $user = User::where('email', $input)->first();
+            $toEmailAddress = $user->email;
             if (!$user) {
                 return response()->json(['error' => 'User not found'], 404);
             }
-            Mail::to($user->email)->send(new SendResetTokenMail($user->email));
-            Log::info("Email sent to: " . $user->email);
+            $res = Mail::to($toEmailAddress)->send(new SendResetTokenMail($toEmailAddress));
+            Log::info("Email sent to: " . $toEmailAddress);
             return response()->json(['success' => true], $this->successCode);
         } catch (\Exception $e) {
             return response()->json([
